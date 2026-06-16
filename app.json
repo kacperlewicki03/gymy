@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "gymy",
+    "slug": "gymy",
+    "version": "1.0.0",
+    "scheme": "gymy",
+    "extra": {
+      "router": {
+        "origin": false
+      }
+    },
+    "plugins": [
+      [
+        "expo-router",
+        {
+          "root": "./src/app"
+        }
+      ]
+    ]
+  }
+}
