@@ -1,0 +1,120 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "loading": "Loading...",
+    "search": "Search...",
+    "next": "Continue",
+    "back": "Back"
+  },
+  "tabs": {
+    "home": "Home",
+    "workout": "Workout",
+    "profile": "Profile"
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Sign in to continue your training",
+    "signInBtn": "Sign In",
+    "noAccount": "Don't have an account? Sign Up",
+    "emailOrUsername": "Email or Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "birthDate": "Date of Birth",
+    "selectDate": "Select date",
+    "height": "Height (cm)",
+    "weight": "Weight (kg)",
+    "registerTitle": "Create Account",
+    "registerSubtitle": "Fill in your details to get started",
+    "registerBtn": "Sign Up",
+    "haveAccount": "Already have an account? Sign In",
+    "step1Title": "Create Account",
+    "step1Subtitle": "Enter your email and a strong password",
+    "step2Title": "Pick a Username",
+    "step2Subtitle": "This will identify your fitness profile",
+    "step3Title": "Your Body Metrics",
+    "step3Subtitle": "Help us calibrate workouts to your body",
+    "next": "Continue",
+    "back": "Back",
+    "finish": "Finish & Create Account",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "usernameTooShort": "Username must be at least 3 characters.",
+    "usernameTaken": "This username is already taken.",
+    "usernameAvailable": "Username is available!",
+    "checkingUsername": "Checking availability...",
+    "invalidDate": "Please enter date as YYYY-MM-DD.",
+    "invalidMetrics": "Please provide valid height and weight.",
+    "fillAllFields": "Please fill in all required fields correctly."
+  },
+  "authErrors": {
+    "invalidEmail": "The email address is invalid.",
+    "invalidCredentials": "Invalid email or password.",
+    "emailInUse": "This email address is already in use.",
+    "weakPassword": "Password must be at least 6 characters long.",
+    "networkFailed": "Network error. Please check your connection.",
+    "tooManyRequests": "Too many attempts. Please try again later.",
+    "unknown": "An unexpected error occurred. Please try again."
+  },
+  "home": {
+    "headerBadge": "LOGGED WORKOUTS",
+    "title": "History",
+    "searchPlaceholder": "Search workouts or exercises...",
+    "emptyTitle": "No workouts recorded yet",
+    "emptyDescription": "Start an empty workout in the Workout tab to log your session.",
+    "minutes": "min",
+    "sets": "sets"
+  },
+  "workoutDetails": {
+    "title": "Workout Summary",
+    "duration": "Duration",
+    "minutes": "min",
+    "exercisesCount": "exercises",
+    "set": "SET",
+    "weight": "KG",
+    "reps": "REPS",
+    "back": "Back",
+    "notFound": "Workout details not found."
+  },
+  "exercises": {
+    "title": "Exercises",
+    "customBadge": "CUSTOM",
+    "all": "All",
+    "addCustom": "New Exercise",
+    "categories": {
+      "chest": "Chest",
+      "back": "Back",
+      "legs": "Legs",
+      "shoulders": "Shoulders",
+      "arms": "Arms",
+      "core": "Core",
+      "other": "Other"
+    }
+  },
+  "profile": {
+    "title": "Profile & Settings",
+    "accountSection": "Personal Information",
+    "preferencesSection": "Preferences",
+    "editProfile": "Edit Profile",
+    "saveChanges": "Save Changes",
+    "cancel": "Cancel",
+    "updateSuccess": "Profile updated successfully.",
+    "loggedAs": "Logged in as",
+    "theme": "Theme",
+    "themeOptions": {
+      "system": "System",
+      "dark": "Dark",
+      "light": "Light"
+    },
+    "language": "Language",
+    "languageOptions": {
+      "en": "English",
+      "pl": "Polish"
+    },
+    "signOut": "Sign Out",
+    "signOutConfirm": "Are you sure you want to sign out?"
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "common": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "loading": "Ładowanie...",
+    "search": "Szukaj...",
+    "next": "Dalej",
+    "back": "Wróć"
+  },
+  "tabs": {
+    "home": "Główna",
+    "workout": "Trening",
+    "profile": "Profil"
+  },
+  "auth": {
+    "loginTitle": "Witaj ponownie",
+    "loginSubtitle": "Zaloguj się, aby kontynuować trening",
+    "signInBtn": "Zaloguj się",
+    "noAccount": "Nie masz jeszcze konta? Zarejestruj się",
+    "emailOrUsername": "E-mail lub nazwa użytkownika",
+    "email": "Adres e-mail",
+    "password": "Hasło",
+    "confirmPassword": "Powtórz hasło",
+    "username": "Nazwa użytkownika",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "birthDate": "Data urodzenia",
+    "selectDate": "Wybierz datę",
+    "height": "Wzrost (cm)",
+    "weight": "Waga (kg)",
+    "registerTitle": "Stwórz konto",
+    "registerSubtitle": "Uzupełnij swoje dane, aby rozpocząć",
+    "registerBtn": "Zarejestruj się",
+    "haveAccount": "Masz już konto? Zaloguj się",
+    "step1Title": "Utwórz konto",
+    "step1Subtitle": "Wprowadź adres e-mail i silne hasło",
+    "step2Title": "Wybierz nazwę użytkownika",
+    "step2Subtitle": "Będzie to Twój unikalny profil w aplikacji",
+    "step3Title": "Twoje parametry",
+    "step3Subtitle": "Pomoże nam to dopasować obciążenia i statystyki",
+    "next": "Dalej",
+    "back": "Wróć",
+    "finish": "Zakończ i załóż konto",
+    "passwordsDoNotMatch": "Hasła nie są identyczne.",
+    "usernameTooShort": "Nazwa użytkownika musi mieć co najmniej 3 znaki.",
+    "usernameTaken": "Ta nazwa użytkownika jest już zajęta.",
+    "usernameAvailable": "Nazwa użytkownika jest dostępna!",
+    "checkingUsername": "Sprawdzanie dostępności...",
+    "invalidDate": "Wprowadź datę w formacie RRRR-MM-DD.",
+    "invalidMetrics": "Wprowadź poprawny wzrost i wagę.",
+    "fillAllFields": "Wypełnij poprawnie wszystkie wymagane pola."
+  },
+  "authErrors": {
+    "invalidEmail": "Podany adres e-mail jest nieprawidłowy.",
+    "invalidCredentials": "Nieprawidłowy e-mail lub hasło.",
+    "emailInUse": "Ten adres e-mail jest już zajęty.",
+    "weakPassword": "Hasło musi mieć co najmniej 6 znaków.",
+    "networkFailed": "Błąd połączenia z siecią. Sprawdź internet.",
+    "tooManyRequests": "Zbyt wiele nieudanych prób. Spróbuj ponownie później.",
+    "unknown": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie."
+  },
+  "home": {
+    "headerBadge": "ZAREJESTROWANE TRENINGI",
+    "title": "Historia",
+    "searchPlaceholder": "Szukaj treningów lub ćwiczeń...",
+    "emptyTitle": "Brak zarejestrowanych treningów",
+    "emptyDescription": "Rozpocznij pusty trening w zakładce Trening, aby zapisać pierwszą sesję.",
+    "minutes": "min",
+    "sets": "serii"
+  },
+  "workoutDetails": {
+    "title": "Podsumowanie treningu",
+    "duration": "Czas trwania",
+    "minutes": "min",
+    "exercisesCount": "ćwiczenia",
+    "set": "SERIA",
+    "weight": "KG",
+    "reps": "POWT.",
+    "back": "Wróć",
+    "notFound": "Nie znaleziono szczegółów treningu."
+  },
+  "exercises": {
+    "title": "Ćwiczenia",
+    "customBadge": "WŁASNE",
+    "all": "Wszystkie",
+    "addCustom": "Nowe ćwiczenie",
+    "categories": {
+      "chest": "Klatka",
+      "back": "Plecy",
+      "legs": "Nogi",
+      "shoulders": "Barki",
+      "arms": "Ramiona",
+      "core": "Brzuch",
+      "other": "Inne"
+    }
+  },
+  "profile": {
+    "title": "Profil i ustawienia",
+    "accountSection": "Informacje osobiste",
+    "preferencesSection": "Preferencje",
+    "editProfile": "Edytuj profil",
+    "saveChanges": "Zapisz zmiany",
+    "cancel": "Anuluj",
+    "updateSuccess": "Profil został pomyślnie zaktualizowany.",
+    "loggedAs": "Zalogowano jako",
+    "theme": "Motyw",
+    "themeOptions": {
+      "system": "System",
+      "dark": "Ciemny",
+      "light": "Jasny"
+    },
+    "language": "Język",
+    "languageOptions": {
+      "en": "Angielski",
+      "pl": "Polski"
+    },
+    "signOut": "Wyloguj się",
+    "signOutConfirm": "Czy na pewno chcesz się wylogować?"
+  }
+}

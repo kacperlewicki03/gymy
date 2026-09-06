@@ -1,4 +1,3 @@
-// src/app/(tabs)/workout.tsx
 import React, { useEffect, useState } from "react";
 import {
   View,
@@ -8,43 +7,109 @@ import {
   ScrollView,
   ActivityIndicator,
 } from "react-native";
-import { exerciseService, Exercise } from "../../services/exerciseService";
+import { Ionicons } from "@expo/vector-icons";
+import { fetchAllAvailableExercises } from "../../services/exerciseService";
+import { Exercise } from "../../types/exercise";
+import { useTheme } from "../../context/ThemeContext";
+import { typography } from "../../theme/typography";
 
 export default function WorkoutScreen() {
+  const { theme } = useTheme();
   const [exercises, setExercises] = useState<Exercise[]>([]);
   const [loading, setLoading] = useState(true);
 
+  // Data fetching lifecycle
   useEffect(() => {
     async function loadData() {
-      const data = await exerciseService.getAllExercises();
-      setExercises(data);
-      setLoading(false);
+      try {
+        const data = await fetchAllAvailableExercises();
+        setExercises(data);
+      } catch (err) {
+        console.error("Failed to load workout exercises:", err);
+      } finally {
+        setLoading(false);
+      }
     }
+
     loadData();
   }, []);
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.sectionTitle}>Szybki start</Text>
-      <TouchableOpacity style={styles.primaryButton}>
-        <Text style={styles.primaryButtonText}>+ Rozpocznij pusty trening</Text>
+    <ScrollView
+      style={[styles.container, { backgroundColor: theme.background }]}
+      contentContainerStyle={styles.contentContainer}
+    >
+      {/* Quick Start Section */}
+      <Text style={[typography.h2, { color: theme.text, marginBottom: 12 }]}>
+        Quick Start
+      </Text>
+
+      <TouchableOpacity
+        style={[styles.primaryButton, { backgroundColor: theme.primary }]}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add-circle-outline" size={20} color="#FFFFFF" />
+        <Text style={[typography.bodyBold, styles.primaryButtonText]}>
+          Start Empty Workout
+        </Text>
       </TouchableOpacity>
 
-      <Text style={styles.sectionTitle}>
-        Dostępne ćwiczenia (z API/Firebase)
+      {/* Available Exercises Section */}
+      <Text
+        style={[
+          typography.h3,
+          { color: theme.text, marginTop: 28, marginBottom: 12 },
+        ]}
+      >
+        Available Exercises
       </Text>
 
       {loading ? (
-        <ActivityIndicator
-          size="large"
-          color="#007AFF"
-          style={{ marginTop: 20 }}
-        />
+        <View style={styles.loaderContainer}>
+          <ActivityIndicator size="large" color={theme.primary} />
+        </View>
       ) : (
         exercises.map((ex, index) => (
-          <View key={ex.id || index} style={styles.exerciseCard}>
-            <Text style={styles.exerciseName}>{ex.name}</Text>
-            <Text style={styles.exerciseCategory}>{ex.category}</Text>
+          <View
+            key={ex.id || index}
+            style={[
+              styles.exerciseCard,
+              {
+                backgroundColor: theme.surface,
+                borderColor: theme.border,
+              },
+            ]}
+          >
+            <View style={styles.cardHeader}>
+              <Text style={[typography.bodyBold, { color: theme.text }]}>
+                {ex.name}
+              </Text>
+              {ex.isCustom && (
+                <View
+                  style={[
+                    styles.customBadge,
+                    { backgroundColor: theme.accent + "20" },
+                  ]}
+                >
+                  <Text style={[typography.badge, { color: theme.accent }]}>
+                    CUSTOM
+                  </Text>
+                </View>
+              )}
+            </View>
+
+            <Text
+              style={[
+                typography.caption,
+                {
+                  color: theme.textSecondary,
+                  marginTop: 4,
+                  textTransform: "capitalize",
+                },
+              ]}
+            >
+              {ex.category}
+            </Text>
           </View>
         ))
       )}
@@ -53,28 +118,44 @@ export default function WorkoutScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: "#f5f5f5", padding: 16 },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 12,
-    marginTop: 16,
+  container: {
+    flex: 1,
+  },
+  contentContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 40,
   },
   primaryButton: {
-    backgroundColor: "#007AFF",
+    flexDirection: "row",
+    height: 52,
+    borderRadius: 12,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 8,
+  },
+  primaryButtonText: {
+    color: "#FFFFFF",
+  },
+  loaderContainer: {
+    paddingVertical: 32,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  exerciseCard: {
     padding: 16,
-    borderRadius: 8,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 10,
+  },
+  cardHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
   },
-  primaryButtonText: { color: "#fff", fontSize: 16, fontWeight: "bold" },
-  exerciseCard: {
-    backgroundColor: "#fff",
-    padding: 14,
-    borderRadius: 8,
-    marginTop: 8,
-    borderWidth: 1,
-    borderColor: "#eee",
+  customBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 6,
   },
-  exerciseName: { fontSize: 16, fontWeight: "bold" },
-  exerciseCategory: { color: "#666", fontSize: 12, marginTop: 2 },
 });

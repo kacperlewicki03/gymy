@@ -15,7 +15,12 @@
         {
           "root": "./src/app"
         }
-      ]
+      ],
+      "expo-status-bar",
+      "expo-asset",
+      "expo-image",
+      "expo-localization",
+      "@react-native-community/datetimepicker"
     ]
   }
 }
