@@ -1,7 +1,16 @@
 export interface Exercise {
   id: string;
   name: string;
-  category: "chest" | "back" | "legs" | "shoulders" | "arms" | "abs" | "other";
+  category:
+    | "chest"
+    | "back"
+    | "legs"
+    | "shoulders"
+    | "bicep"
+    | "triceps"
+    | "glutes"
+    | "abs"
+    | "other";
   equipment?:
     | "barbell"
     | "dumbbell"
