@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useState, useMemo, useCallback } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,11 +6,12 @@ import {
   View,
   ActivityIndicator,
   TouchableOpacity,
+  RefreshControl,
 } from "react-native";
 import { FlashList } from "@shopify/flash-list";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { useRouter, useFocusEffect } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "../../context/ThemeContext";
 import { typography } from "../../theme/typography";
@@ -20,37 +21,67 @@ import { WorkoutSession } from "../../types/workout";
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const router = useRouter();
 
   const [workouts, setWorkouts] = useState<WorkoutSession[]>([]);
   const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Load user workouts on mount
-  useEffect(() => {
-    async function loadData() {
-      setLoading(true);
+  const loadData = useCallback(async (showLoader = false) => {
+    if (showLoader) setLoading(true);
+    try {
       const data = await fetchUserWorkouts();
       setWorkouts(data);
+    } catch (error) {
+      console.error("Failed to fetch workouts:", error);
+    } finally {
       setLoading(false);
+      setRefreshing(false);
     }
-
-    loadData();
   }, []);
+
+  // Reload workouts every time the screen gains focus (e.g., after finishing a workout)
+  useFocusEffect(
+    useCallback(() => {
+      loadData(workouts.length === 0);
+    }, [loadData, workouts.length]),
+  );
+
+  const handleRefresh = () => {
+    setRefreshing(true);
+    loadData(false);
+  };
 
   // Search filter
   const filteredWorkouts = useMemo(() => {
+    const query = searchQuery.toLowerCase().trim();
+    if (!query) return workouts;
+
     return workouts.filter((item) => {
-      const matchesTitle = item.title
-        .toLowerCase()
-        .includes(searchQuery.toLowerCase());
+      const matchesTitle = item.title.toLowerCase().includes(query);
       const matchesExercise = item.exercises?.some((ex) =>
-        ex.exerciseName.toLowerCase().includes(searchQuery.toLowerCase()),
+        ex.exerciseName.toLowerCase().includes(query),
       );
       return matchesTitle || matchesExercise;
     });
   }, [workouts, searchQuery]);
+
+  const formatDate = (isoString: string) => {
+    if (!isoString) return "";
+    const parsed = new Date(isoString);
+    if (isNaN(parsed.getTime())) return isoString;
+
+    return parsed.toLocaleDateString(
+      i18n.language.startsWith("pl") ? "pl-PL" : "en-US",
+      {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      },
+    );
+  };
 
   return (
     <View
@@ -95,6 +126,13 @@ export default function HomeScreen() {
           data={filteredWorkouts}
           keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingBottom: 24 }}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={handleRefresh}
+              tintColor={theme.primary}
+            />
+          }
           ListEmptyComponent={
             <View style={styles.emptyContainer}>
               <Ionicons
@@ -143,18 +181,53 @@ export default function HomeScreen() {
                 <Text
                   style={[typography.caption, { color: theme.textSecondary }]}
                 >
-                  {item.date}
+                  {formatDate(item.date)}
                 </Text>
               </View>
 
-              <Text
-                style={[
-                  typography.caption,
-                  { color: theme.primary, marginTop: 2, fontWeight: "600" },
-                ]}
-              >
-                {item.durationMinutes} {t("home.minutes")}
-              </Text>
+              {/* Metrics Row: Duration, Calories, Heart Rate */}
+              <View style={styles.metricsRow}>
+                <Text
+                  style={[
+                    typography.caption,
+                    { color: theme.primary, fontWeight: "600" },
+                  ]}
+                >
+                  {item.durationMinutes} {t("home.minutes")}
+                </Text>
+
+                {item.caloriesBurned !== undefined && (
+                  <View style={styles.metricBadge}>
+                    <Ionicons name="flame-outline" size={14} color="#F59E0B" />
+                    <Text
+                      style={[
+                        typography.caption,
+                        { color: theme.textSecondary, fontWeight: "600" },
+                      ]}
+                    >
+                      {item.caloriesBurned} {t("workoutDetails.kcal")}
+                    </Text>
+                  </View>
+                )}
+
+                {item.avgHeartRate !== undefined && (
+                  <View style={styles.metricBadge}>
+                    <Ionicons
+                      name="heart-outline"
+                      size={14}
+                      color={theme.danger}
+                    />
+                    <Text
+                      style={[
+                        typography.caption,
+                        { color: theme.textSecondary, fontWeight: "600" },
+                      ]}
+                    >
+                      {item.avgHeartRate} {t("workoutDetails.bpm")}
+                    </Text>
+                  </View>
+                )}
+              </View>
 
               {/* Exercise Summary Preview */}
               <View style={styles.exercisesList}>
@@ -208,6 +281,19 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "flex-start",
+    gap: 8,
+  },
+  metricsRow: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    alignItems: "center",
+    gap: 12,
+    marginTop: 4,
+  },
+  metricBadge: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 4,
   },
   exercisesList: {
     marginTop: 10,

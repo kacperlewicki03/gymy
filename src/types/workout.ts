@@ -1,13 +1,10 @@
-// Workout Data Models
-
 export interface WorkoutSet {
   setNumber: number;
   weightKg: number;
   reps: number;
-  completed: boolean;
 }
 
-export interface WorkoutExerciseItem {
+export interface WorkoutExercise {
   exerciseId: string;
   exerciseName: string;
   sets: WorkoutSet[];
@@ -15,10 +12,11 @@ export interface WorkoutExerciseItem {
 
 export interface WorkoutSession {
   id: string;
-  userId: string;
   title: string;
   date: string;
-  createdAt?: any;
   durationMinutes: number;
-  exercises: WorkoutExerciseItem[];
+  exercises: WorkoutExercise[];
+  caloriesBurned?: number;
+  avgHeartRate?: number;
+  maxHeartRate?: number;
 }

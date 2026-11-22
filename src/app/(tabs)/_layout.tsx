@@ -42,7 +42,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="home-variant"
               size={size || 24}
-              color={color}
+              color={typeof color === "string" ? color : theme.textSecondary}
             />
           ),
         }}
@@ -57,7 +57,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="dumbbell"
               size={size || 24}
-              color={color}
+              color={typeof color === "string" ? color : theme.textSecondary}
             />
           ),
         }}
@@ -72,7 +72,7 @@ export default function TabLayout() {
             <MaterialCommunityIcons
               name="account-cog"
               size={size || 24}
-              color={color}
+              color={typeof color === "string" ? color : theme.textSecondary}
             />
           ),
         }}

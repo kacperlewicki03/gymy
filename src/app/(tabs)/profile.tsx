@@ -27,6 +27,7 @@ import {
 import { UserProfile } from "../../types/user";
 import { typography } from "../../theme/typography";
 import { ValuePickerModal } from "../../components/ValuePickerModal";
+import { requestHealthPermissions } from "../../services/healthService";
 
 const LANGUAGE_STORAGE_KEY = "@gymy_language";
 
@@ -118,7 +119,19 @@ export default function ProfileScreen() {
     await i18n.changeLanguage(lang);
     await AsyncStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
   };
-
+  const handleConnectHealth = async () => {
+    const granted = await requestHealthPermissions();
+    Alert.alert(
+      Platform.OS === "ios" ? "Apple Health" : "Health Connect",
+      granted
+        ? i18n.language.startsWith("pl")
+          ? "Połączono pomyślnie! Dane tętna i kalorii będą pobierane po treningu."
+          : "Connected! Heart rate and calories will sync after workouts."
+        : i18n.language.startsWith("pl")
+          ? "Nie udało się uzyskać uprawnień lub funkcja wymaga wersji natywnej (Dev Build)."
+          : "Permissions not granted or native Dev Build required.",
+    );
+  };
   const handleLogout = () => {
     Alert.alert(t("profile.signOut"), t("profile.signOutConfirm"), [
       { text: t("common.cancel"), style: "cancel" },
@@ -545,6 +558,30 @@ export default function ProfileScreen() {
             })}
           </View>
         </View>
+        <View style={[styles.divider, { backgroundColor: theme.border }]} />
+
+        <TouchableOpacity
+          style={styles.settingRow}
+          onPress={handleConnectHealth}
+        >
+          <View style={styles.settingLabelGroup}>
+            <Ionicons
+              name="heart-circle-outline"
+              size={22}
+              color={theme.danger}
+            />
+            <Text
+              style={[typography.body, { color: theme.text, marginLeft: 12 }]}
+            >
+              {Platform.OS === "ios" ? "Apple Health" : "Health Connect"}
+            </Text>
+          </View>
+          <Ionicons
+            name="chevron-forward"
+            size={18}
+            color={theme.textSecondary}
+          />
+        </TouchableOpacity>
       </View>
 
       {/* Logout Action */}

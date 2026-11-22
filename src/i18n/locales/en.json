@@ -68,6 +68,19 @@
     "minutes": "min",
     "sets": "sets"
   },
+  "workout": {
+    "quickStart": "Quick Start",
+    "startEmpty": "Start Empty Workout",
+    "myRoutines": "My Routines",
+    "newRoutine": "New Routine",
+    "routineTitlePlaceholder": "Routine name (e.g. Push A, Upper Body)...",
+    "addExerciseToRoutine": "Add Exercise",
+    "targetSets": "sets",
+    "emptyRoutinesTitle": "No routines created yet",
+    "emptyRoutinesDesc": "Create your own workout templates to start training with one tap.",
+    "startRoutine": "Start Workout",
+    "deleteRoutineConfirm": "Delete this routine?"
+  },
   "workoutDetails": {
     "title": "Workout Summary",
     "duration": "Duration",
@@ -77,22 +90,57 @@
     "weight": "KG",
     "reps": "REPS",
     "back": "Back",
-    "notFound": "Workout details not found."
+    "notFound": "Workout details not found.",
+    "calories": "Calories",
+    "kcal": "kcal",
+    "avgHeartRate": "Avg HR",
+    "maxHeartRate": "Max HR",
+    "bpm": "bpm"
   },
   "exercises": {
     "title": "Exercises",
     "customBadge": "CUSTOM",
     "all": "All",
     "addCustom": "New Exercise",
+    "searchPlaceholder": "Search exercises...",
+    "namePlaceholder": "Exercise name",
+    "descriptionPlaceholder": "Execution instructions / cues...",
+    "selectCategory": "Muscle Group",
     "categories": {
       "chest": "Chest",
+      "shoulder": "Shoulders",
+      "bicep": "Biceps",
+      "triceps": "Triceps",
+      "leg": "Legs",
       "back": "Back",
-      "legs": "Legs",
-      "shoulders": "Shoulders",
-      "arms": "Arms",
-      "core": "Core",
-      "other": "Other"
+      "glute": "Glutes",
+      "ab": "Abs"
     }
+  },
+  "activeWorkout": {
+    "defaultTitle": "Quick Workout",
+    "workoutNamePlaceholder": "Workout name...",
+    "finish": "Finish",
+    "addExercise": "Add Exercise",
+    "addSet": "+ Add Set",
+    "set": "SET",
+    "kg": "KG",
+    "reps": "REPS",
+    "restTimer": "Rest Timer",
+    "skipRest": "Skip",
+    "emptyTitle": "No exercises yet",
+    "emptyDesc": "Tap the button below to add your first exercise.",
+    "discardTitle": "Discard Workout?",
+    "discardMessage": "Your current workout progress will be lost.",
+    "discardConfirm": "Discard",
+    "finishTitle": "Finish Workout?",
+    "finishMessage": "Save this session to your workout history?",
+    "noCompletedSets": "Complete at least one set (tap the checkmark) before finishing.",
+    "saveError": "Failed to save workout. Please try again.",
+    "kcal": "kcal",
+    "bpm": "bpm",
+    "liveHr": "HR",
+    "previous": "LAST"
   },
   "profile": {
     "title": "Profile & Settings",

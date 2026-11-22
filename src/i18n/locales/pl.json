@@ -68,6 +68,19 @@
     "minutes": "min",
     "sets": "serii"
   },
+  "workout": {
+    "quickStart": "Szybki start",
+    "startEmpty": "Rozpocznij pusty trening",
+    "myRoutines": "Moje rutyny",
+    "newRoutine": "Nowa rutyna",
+    "routineTitlePlaceholder": "Nazwa rutyny (np. Push A, FBW)...",
+    "addExerciseToRoutine": "Dodaj ćwiczenie",
+    "targetSets": "serii",
+    "emptyRoutinesTitle": "Brak utworzonych rutyn",
+    "emptyRoutinesDesc": "Stwórz własne plany treningowe, aby rozpoczynać trening jednym kliknięciem.",
+    "startRoutine": "Rozpocznij trening",
+    "deleteRoutineConfirm": "Czy na pewno usunąć tę rutynę?"
+  },
   "workoutDetails": {
     "title": "Podsumowanie treningu",
     "duration": "Czas trwania",
@@ -77,21 +90,56 @@
     "weight": "KG",
     "reps": "POWT.",
     "back": "Wróć",
-    "notFound": "Nie znaleziono szczegółów treningu."
+    "notFound": "Nie znaleziono szczegółów treningu.",
+    "calories": "Kalorie",
+    "kcal": "kcal",
+    "avgHeartRate": "Śr. tętno",
+    "maxHeartRate": "Maks. tętno",
+    "bpm": "ud./min"
+  },
+  "activeWorkout": {
+    "defaultTitle": "Szybki trening",
+    "workoutNamePlaceholder": "Nazwa treningu...",
+    "finish": "Zakończ",
+    "addExercise": "Dodaj ćwiczenie",
+    "addSet": "+ Dodaj serię",
+    "set": "SERIA",
+    "kg": "KG",
+    "reps": "POWT.",
+    "restTimer": "Przerwa",
+    "skipRest": "Pomiń",
+    "emptyTitle": "Brak ćwiczeń w sesji",
+    "emptyDesc": "Kliknij przycisk poniżej, aby dodać pierwsze ćwiczenie.",
+    "discardTitle": "Porzucić trening?",
+    "discardMessage": "Aktualny postęp treningu zostanie utracony.",
+    "discardConfirm": "Porzuć",
+    "finishTitle": "Zakończyć trening?",
+    "finishMessage": "Zapisać tę sesję w historii treningów?",
+    "noCompletedSets": "Odhacz przynajmniej jedną wykonaną serię przed zapisaniem.",
+    "saveError": "Nie udało się zapisać treningu. Spróbuj ponownie.",
+    "kcal": "kcal",
+    "bpm": "ud./min",
+    "liveHr": "Tętno",
+    "previous": "POPRZEDNIO"
   },
   "exercises": {
     "title": "Ćwiczenia",
     "customBadge": "WŁASNE",
     "all": "Wszystkie",
     "addCustom": "Nowe ćwiczenie",
+    "searchPlaceholder": "Szukaj ćwiczeń...",
+    "namePlaceholder": "Nazwa ćwiczenia",
+    "descriptionPlaceholder": "Opis wykonania / wskazówki...",
+    "selectCategory": "Partia mięśniowa",
     "categories": {
       "chest": "Klatka",
+      "shoulder": "Barki",
+      "bicep": "Biceps",
+      "triceps": "Triceps",
+      "leg": "Nogi",
       "back": "Plecy",
-      "legs": "Nogi",
-      "shoulders": "Barki",
-      "arms": "Ramiona",
-      "core": "Brzuch",
-      "other": "Inne"
+      "glute": "Pośladki",
+      "ab": "Brzuch"
     }
   },
   "profile": {

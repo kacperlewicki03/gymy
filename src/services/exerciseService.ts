@@ -1,79 +1,133 @@
 import {
   collection,
+  doc,
   getDocs,
+  writeBatch,
   addDoc,
+  query,
+  where,
   serverTimestamp,
 } from "firebase/firestore";
-import { db, auth } from "../config/firebase";
-import { Exercise } from "../types/exercise";
+import { auth, db } from "../config/firebase";
+import { Exercise, ExerciseCategory } from "../types/exercise";
+import { DEFAULT_EXERCISES } from "../data/defaultExercises";
 
-export type { Exercise };
+const EXERCISES_COLLECTION = "exercises";
 
-// Service Functions
-
-export async function fetchAllAvailableExercises(): Promise<Exercise[]> {
+/**
+ * Seeds default exercises into Firestore if the collection is empty.
+ * Uses writeBatch for fast atomic writes.
+ */
+export async function seedDefaultExercisesIfNeeded(): Promise<void> {
   try {
-    // Fetch public/global exercises
-    const globalSnap = await getDocs(collection(db, "exercises"));
-    const globalExercises: Exercise[] = globalSnap.docs.map((doc) => ({
-      id: doc.id,
-      ...(doc.data() as Omit<Exercise, "id">),
-      isCustom: false,
-    }));
+    const exercisesRef = collection(db, EXERCISES_COLLECTION);
+    const defaultQuery = query(exercisesRef, where("isCustom", "==", false));
+    const snapshot = await getDocs(defaultQuery);
 
-    // Fetch authenticated user's custom exercises
-    const currentUser = auth.currentUser;
-    let customExercises: Exercise[] = [];
-
-    if (currentUser) {
-      const userCol = collection(
-        db,
-        "users",
-        currentUser.uid,
-        "customExercises",
-      );
-      const customSnap = await getDocs(userCol);
-      customExercises = customSnap.docs.map((doc) => ({
-        id: doc.id,
-        ...(doc.data() as Omit<Exercise, "id">),
-        isCustom: true,
-      }));
+    // If default exercises already exist in Firestore, skip seeding
+    if (!snapshot.empty && snapshot.size >= DEFAULT_EXERCISES.length) {
+      return;
     }
 
-    // Merge and sort alphabetically by name
-    return [...globalExercises, ...customExercises].sort((a, b) =>
-      a.name.localeCompare(b.name, "en"),
-    );
+    const batch = writeBatch(db);
+
+    DEFAULT_EXERCISES.forEach((exercise) => {
+      const docRef = doc(db, EXERCISES_COLLECTION, exercise.id);
+      batch.set(
+        docRef,
+        {
+          ...exercise,
+          isCustom: false,
+        },
+        { merge: true },
+      );
+    });
+
+    await batch.commit();
+  } catch (error) {
+    console.error("Error seeding default exercises:", error);
+  }
+}
+
+/**
+ * Fetches all default exercises plus custom exercises created by the current user.
+ */
+export async function fetchAllExercises(): Promise<Exercise[]> {
+  try {
+    await seedDefaultExercisesIfNeeded();
+
+    const user = auth.currentUser;
+    const exercisesRef = collection(db, EXERCISES_COLLECTION);
+
+    // Fetch default exercises
+    const defaultQuery = query(exercisesRef, where("isCustom", "==", false));
+    const defaultSnap = await getDocs(defaultQuery);
+
+    const exercises: Exercise[] = defaultSnap.docs.map((docSnap) => ({
+      id: docSnap.id,
+      ...(docSnap.data() as Omit<Exercise, "id">),
+    }));
+
+    // Fetch user's custom exercises if logged in
+    if (user) {
+      const customQuery = query(
+        exercisesRef,
+        where("isCustom", "==", true),
+        where("createdBy", "==", user.uid),
+      );
+      const customSnap = await getDocs(customQuery);
+
+      customSnap.docs.forEach((docSnap) => {
+        exercises.push({
+          id: docSnap.id,
+          ...(docSnap.data() as Omit<Exercise, "id">),
+        });
+      });
+    }
+
+    return exercises;
   } catch (error) {
     console.error("Error fetching exercises:", error);
-    throw error;
+    return DEFAULT_EXERCISES.map((ex) => ({ ...ex, isCustom: false }));
   }
 }
 
-// New custom exercise creation
-
+/**
+ * Creates a new custom exercise for the currently logged-in user.
+ */
 export async function createCustomExercise(data: {
   name: string;
-  category: Exercise["category"];
   description: string;
-}): Promise<string> {
-  const currentUser = auth.currentUser;
-  if (!currentUser) {
-    throw new Error("User must be authenticated to create a custom exercise.");
-  }
+  category: ExerciseCategory;
+}): Promise<Exercise> {
+  const user = auth.currentUser;
+  if (!user)
+    throw new Error("User must be logged in to create custom exercises.");
 
-  const userCol = collection(db, "users", currentUser.uid, "customExercises");
-  const docRef = await addDoc(userCol, {
-    ...data,
-    userId: currentUser.uid,
+  const exercisesRef = collection(db, EXERCISES_COLLECTION);
+  const newExercisePayload = {
+    name: {
+      en: data.name.trim(),
+      pl: data.name.trim(),
+    },
+    description: {
+      en: data.description.trim(),
+      pl: data.description.trim(),
+    },
+    category: data.category,
+    isCustom: true,
+    createdBy: user.uid,
     createdAt: serverTimestamp(),
-  });
+  };
 
-  return docRef.id;
+  const docRef = await addDoc(exercisesRef, newExercisePayload);
+
+  return {
+    id: docRef.id,
+    name: newExercisePayload.name,
+    description: newExercisePayload.description,
+    category: data.category,
+    isCustom: true,
+    createdBy: user.uid,
+  };
 }
-
-export const exerciseService = {
-  getAllExercises: fetchAllAvailableExercises,
-  fetchAllAvailableExercises,
-  createCustomExercise,
-};

@@ -9,6 +9,21 @@
         "origin": false
       }
     },
+    "ios": {
+      "infoPlist": {
+        "NSHealthShareUsageDescription": "Aplikacja odczytuje tętno oraz spalone kalorie podczas sesji treningowych.",
+        "NSHealthUpdateUsageDescription": "Aplikacja zapisuje podsumowania ukończonych treningów siłowych."
+      },
+      "bundleIdentifier": "com.kaacpero.gymy"
+    },
+    "android": {
+      "permissions": [
+        "android.permission.health.READ_HEART_RATE",
+        "android.permission.health.READ_ACTIVE_CALORIES_BURNED",
+        "android.permission.health.WRITE_EXERCISE"
+      ],
+      "package": "com.kaacpero.gymy"
+    },
     "plugins": [
       [
         "expo-router",
@@ -16,12 +31,23 @@
           "root": "./src/app"
         }
       ],
+      [
+        "react-native-health",
+        {
+          "isClinicalDataEnabled": false,
+          "healthSharePermission": "Odczyt tętna i spalonych kalorii podczas treningu.",
+          "healthUpdatePermission": "Zapis ukończonych treningów siłowych."
+        }
+      ],
       "expo-status-bar",
       "expo-asset",
       "expo-image",
       "expo-localization",
       "@react-native-community/datetimepicker",
-      "expo-font"
+      "expo-font",
+      "react-native-health",
+      "react-native-health-connect",
+      "expo-health-connect"
     ]
   }
 }

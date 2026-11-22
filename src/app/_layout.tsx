@@ -49,6 +49,11 @@ function RootNavigationLayout() {
       >
         <Stack.Screen name="(auth)" />
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="workout/[id]" />
+        <Stack.Screen
+          name="workout/active"
+          options={{ gestureEnabled: false }}
+        />
       </Stack>
     </>
   );
